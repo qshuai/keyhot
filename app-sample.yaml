@@ -1,0 +1,18 @@
+app: keyhot
+version: 0.1.0
+
+datasoure: mysql
+
+mysql: 
+  host: 127.0.0.1
+  port: 3306
+  user: mysql-username
+  passwd: your-password
+  database: word_note
+
+fetcher: youdao
+
+youdao:
+  appid: your-appid
+  appkey: your-appkey
+  url: https://openapi.youdao.com/api
