@@ -4,3 +4,6 @@ app.yaml
 # binary file
 keyhot
 
+# database
+word.db
+

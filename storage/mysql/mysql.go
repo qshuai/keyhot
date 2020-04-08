@@ -3,14 +3,12 @@ package mysql
 import (
 	"fmt"
 
-	"github.com/go-errors/errors"
 	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/qshuai/keyhot/model"
+	"github.com/qshuai/keyhot/storage/common"
 )
-
-var NotFound = errors.New("not found")
 
 type MysqlStorage struct {
 	username string // 用户名
@@ -39,7 +37,7 @@ func New(host string, port int, username, passwd, database string) (*MysqlStorag
 func (m *MysqlStorage) Create(word, explain string) error {
 	record, err := m.GetRecordByOrigin(word)
 	if err != nil {
-		if err == NotFound {
+		if err == common.NotFound {
 			// create new record
 			_, err = m.DB.Exec("insert into word (`origin`, `target`) VALUES (?, ?)", word, explain)
 			return err
@@ -66,7 +64,7 @@ func (m *MysqlStorage) GetRecordByOrigin(word string) (*model.Word, error) {
 	}
 
 	if len(ret) <= 0 {
-		return nil, NotFound
+		return nil, common.NotFound
 	}
 
 	return ret[0], nil
