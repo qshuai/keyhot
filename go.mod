@@ -3,6 +3,7 @@ module github.com/qshuai/keyhot
 go 1.13
 
 require (
+	github.com/andlabs/ui v0.0.0-20180902183112-867a9e5a498d
 	github.com/atotto/clipboard v0.1.2
 	github.com/go-errors/errors v1.0.1
 	github.com/go-sql-driver/mysql v1.5.0

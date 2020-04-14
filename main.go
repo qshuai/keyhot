@@ -10,8 +10,9 @@ import (
 	"github.com/go-vgo/robotgo"
 	"github.com/qshuai/keyhot/fetcher"
 	"github.com/qshuai/keyhot/fetcher/youdao"
+	"github.com/qshuai/keyhot/gui"
 	"github.com/qshuai/keyhot/storage"
-	"github.com/qshuai/keyhot/storage/mysql"
+	"github.com/qshuai/keyhot/storage/sqlite"
 	hook "github.com/robotn/gohook"
 	"github.com/spf13/viper"
 )
@@ -19,10 +20,6 @@ import (
 type app struct {
 	fetcher fetcher.Fetcher
 	storage storage.Storage
-}
-
-func newApp() (*app, error) {
-	return nil, nil
 }
 
 func main() {
@@ -40,7 +37,8 @@ func main() {
 	defer hook.End()
 
 	fetch := youdao.New(viper.GetString("youdao.appid"), viper.GetString("youdao.appkey"))
-	store, err := mysql.New(viper.GetString("mysql.host"), viper.GetInt("mysql.port"), viper.GetString("mysql.user"), viper.GetString("mysql.passwd"), viper.GetString("mysql.database"))
+	//store, err := mysql.New(viper.GetString("mysql.host"), viper.GetInt("mysql.port"), viper.GetString("mysql.user"), viper.GetString("mysql.passwd"), viper.GetString("mysql.database"))
+	store, err := sqlite.New()
 	if err != nil {
 		log.Printf("connect to storage error: %s", err)
 	}
@@ -94,6 +92,7 @@ func main() {
 			}
 
 			// 展示组件
+			gui.ShowTranslation(result.Origin, result.Target)
 
 			// 存储组件 异步化
 			go func() {
